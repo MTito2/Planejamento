@@ -2,15 +2,16 @@ import openpyxl
 from openpyxl import Workbook
 from openpyxl.styles import Border, Side, Alignment
 
-def ler_planilha(caminho_arquivo, nome_aba_especifica, linha_inicial, linha_final):
+def ler_planilha(caminho_arquivo, nome_aba_especifica, linha_inicial):
     wb = openpyxl.load_workbook(caminho_arquivo, data_only=True)
-    
+    ws = wb.active
     if nome_aba_especifica not in wb.sheetnames:
         raise ValueError(f"A aba '{nome_aba_especifica}' não foi encontrada na planilha.")
     
     sheet = wb[nome_aba_especifica]
     nome_aba = sheet.title
     dados_colunas = {}
+    linha_final = ws.max_row
     
     for col in range(1, sheet.max_column + 1):
         coluna = []
@@ -117,13 +118,13 @@ def criar_planilha(dados_unidos, nome_arquivo):
     print(f"Planilha salva como: {nome_arquivo}")
 
 # Definindo o caminho e parâmetros
-caminho = r"C:\\Users\\Salum\\Downloads\\Descaracterização - teste.xlsx"
+caminho = r"C:\\Users\\Pichau\\Downloads\\Descaracterização - teste.xlsx"
 nome_aba = 'CRN'
 linha_inicial = 698
-linha_final = 1394
+
 
 # Ler a planilha
-nome_aba, dados = ler_planilha(caminho, nome_aba, linha_inicial, linha_final)
+nome_aba, dados = ler_planilha(caminho, nome_aba, linha_inicial)
 
 # Processar os dados
 subtopicos, agrupados = processar_dados(dados)
@@ -132,7 +133,7 @@ subtopicos, agrupados = processar_dados(dados)
 dados_unidos = unir_subtopicos_valores(subtopicos, agrupados)
 
 # Definir o nome do arquivo e intervalos a excluir
-nome_arquivo = "dados_1.xlsx"
+nome_arquivo = r"C:\\Users\\Pichau\\Downloads\\Dados.xlsx"
 
 # Criar a planilha final
 criar_planilha(dados_unidos, nome_arquivo)
