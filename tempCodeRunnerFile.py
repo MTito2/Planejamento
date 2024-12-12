@@ -1,0 +1,1 @@
+caminho = f"C:\\Users\\SALUM\\Documents\\curva_financeira\\{arquivo}.xlsx"

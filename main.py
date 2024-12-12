@@ -6,7 +6,7 @@ import os
 
 warnings.filterwarnings("ignore", category=UserWarning, module="openpyxl")
 
-def ler_planilha(caminho_arquivo, nome_aba_especifica, linha_inicial):
+def ler_planilha(caminho_arquivo, nome_aba_especifica):
     print("Analisando dados, aguarde...")
     wb = openpyxl.load_workbook(caminho_arquivo, data_only=True)
     ws = wb.active
@@ -16,6 +16,7 @@ def ler_planilha(caminho_arquivo, nome_aba_especifica, linha_inicial):
     sheet = wb[nome_aba_especifica]
     nome_aba = sheet.title
     dados_colunas = {}
+    linha_inicial = 1
     linha_final = ws.max_row
     
     for col in range(1, sheet.max_column + 1):
@@ -41,7 +42,8 @@ def processar_dados(dados):
         subtopicos = dados["Coluna_3"][3:]  # A partir da linha 4
         periodo = valores[0].strftime("%d/%m/%Y")  # Formatação de data
         valores_somados = valores[3:]  # A partir da linha 4
-        
+        valores_somados = [float(valor) if valor not in (None, '', ' ') else 0 for valor in valores_somados]
+
         if periodo in agrupados:
             for i, valor in enumerate(valores_somados):
                 if i < len(agrupados[periodo]):
@@ -125,12 +127,12 @@ def criar_planilha(dados_unidos, nome_arquivo):
 
 # Definindo o caminho e parâmetros
 arquivo = input("Informe o nome do arquivo: ")
+
 caminho = f"C:\\Users\\SALUM\\Documents\\curva_financeira\\{arquivo}.xlsx"
 nome_aba = 'CRN'
-linha_inicial = 1
 
 # Ler a planilha
-nome_aba, dados = ler_planilha(caminho, nome_aba, linha_inicial)
+nome_aba, dados = ler_planilha(caminho, nome_aba)
 
 # Processar os dados
 subtopicos, agrupados = processar_dados(dados)
