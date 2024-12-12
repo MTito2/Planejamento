@@ -124,10 +124,10 @@ def criar_planilha(dados_unidos, nome_arquivo):
 
 
 # Definindo o caminho e parâmetros
-caminho = r"C:\\Users\\Pichau\\Downloads\\Descaracterização - Curva S Avanço Financeiro - OS 01 & OS 02.xlsx"
+arquivo = input("Informe o nome do arquivo: ")
+caminho = f"C:\\Users\\SALUM\\Documents\\curva_financeira\\{arquivo}.xlsx"
 nome_aba = 'CRN'
 linha_inicial = 698
-
 
 # Ler a planilha
 nome_aba, dados = ler_planilha(caminho, nome_aba, linha_inicial)
@@ -139,6 +139,6 @@ subtopicos, agrupados = processar_dados(dados)
 dados_unidos = unir_subtopicos_valores(subtopicos, agrupados)
 
 # Definir o nome do arquivo e intervalos a excluir
-nome_arquivo = r"C:\\Users\\Pichau\\Downloads\\Dados.xlsx"
+nome_arquivo = r"C:\\Users\\SALUM\\Documents\\curva_financeira\\Auxiliar de atualização financeira.xlsx"
 # Criar a planilha final
 criar_planilha(dados_unidos, nome_arquivo)
