@@ -56,7 +56,7 @@ def unir_subtopicos_valores(subtopicos, agrupados):
         unidos[periodo] = list(zip(subtopicos, valores))
     return unidos
 
-def criar_planilha(dados_unidos, nome_arquivo, intervalos_a_excluir=None):
+def criar_planilha(dados_unidos, nome_arquivo):
     wb = Workbook()
     ws = wb.active
     ws.title = "Dados Processados"
@@ -96,14 +96,6 @@ def criar_planilha(dados_unidos, nome_arquivo, intervalos_a_excluir=None):
             cell.border = borda  # Adiciona borda
             cell.alignment = alinhamento  # Centraliza o texto
 
-    # Excluir linhas específicas ou intervalos de linhas, se forem fornecidas
-    if intervalos_a_excluir:
-        for intervalo in intervalos_a_excluir:
-            # Excluir linhas de um intervalo específico
-            start, end = intervalo
-            for linha in range(start, end + 1):  # Garantir que exclua de start até end
-                ws.delete_rows(start)
-
     # Ajustar a largura das colunas automaticamente
     for col_idx in range(1, len(periodos) + 2):  # +2 para incluir a coluna de sub-tópicos
         max_length = 0
@@ -141,7 +133,6 @@ dados_unidos = unir_subtopicos_valores(subtopicos, agrupados)
 
 # Definir o nome do arquivo e intervalos a excluir
 nome_arquivo = "dados_1.xlsx"
-intervalos_a_excluir = [(589, 636)]  # Intervalo de linhas a excluir
 
 # Criar a planilha final
-criar_planilha(dados_unidos, nome_arquivo, intervalos_a_excluir)
+criar_planilha(dados_unidos, nome_arquivo)
