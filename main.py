@@ -127,7 +127,7 @@ def criar_planilha(dados_unidos, nome_arquivo):
 arquivo = input("Informe o nome do arquivo: ")
 caminho = f"C:\\Users\\SALUM\\Documents\\curva_financeira\\{arquivo}.xlsx"
 nome_aba = 'CRN'
-linha_inicial = 698
+linha_inicial = 1
 
 # Ler a planilha
 nome_aba, dados = ler_planilha(caminho, nome_aba, linha_inicial)
