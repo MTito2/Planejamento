@@ -1,8 +1,13 @@
 import openpyxl
 from openpyxl import Workbook
 from openpyxl.styles import Border, Side, Alignment
+import warnings
+import os
+
+warnings.filterwarnings("ignore", category=UserWarning, module="openpyxl")
 
 def ler_planilha(caminho_arquivo, nome_aba_especifica, linha_inicial):
+    print("Analisando dados, aguarde...")
     wb = openpyxl.load_workbook(caminho_arquivo, data_only=True)
     ws = wb.active
     if nome_aba_especifica not in wb.sheetnames:
@@ -112,13 +117,14 @@ def criar_planilha(dados_unidos, nome_arquivo):
                     pass
         adjusted_width = (max_length + 2)
         column.width = adjusted_width
-
+    os.system("cls")
     # Salvar o arquivo
     wb.save(nome_arquivo)
-    print(f"Planilha salva como: {nome_arquivo}")
+    print(f"Planilha salva em: {nome_arquivo}")
+
 
 # Definindo o caminho e parâmetros
-caminho = r"C:\\Users\\Pichau\\Downloads\\Descaracterização - teste.xlsx"
+caminho = r"C:\\Users\\Pichau\\Downloads\\Descaracterização - Curva S Avanço Financeiro - OS 01 & OS 02.xlsx"
 nome_aba = 'CRN'
 linha_inicial = 698
 
@@ -134,6 +140,5 @@ dados_unidos = unir_subtopicos_valores(subtopicos, agrupados)
 
 # Definir o nome do arquivo e intervalos a excluir
 nome_arquivo = r"C:\\Users\\Pichau\\Downloads\\Dados.xlsx"
-
 # Criar a planilha final
 criar_planilha(dados_unidos, nome_arquivo)
